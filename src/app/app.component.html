@@ -1,2 +1,25 @@
-<app-sidenav></app-sidenav>
-<router-outlet></router-outlet>
+<mat-drawer-container class="mat-drawer-container" autosize>
+    <mat-drawer #drawer [opened]="true" class="sidenav" mode="side">
+        <div class="logo-container">
+            PLATZ FÜR LOGO
+        </div>
+        <ul>
+            <li routerLink="/" routerLinkActive="active"><mat-icon>dashboard</mat-icon> Dashboard</li>
+            <li routerLink="/user" routerLinkActive="active"><mat-icon>perm_identity</mat-icon> User</li>
+        </ul>
+    </mat-drawer>
+
+    <div class="example-sidenav-content">
+        <mat-toolbar color="primary">
+            <mat-toolbar-row>
+                <button mat-icon-button (click)="drawer.toggle()">
+                    <mat-icon>menu</mat-icon>
+                </button>
+                <span>Simple CRM</span>
+            </mat-toolbar-row>
+        </mat-toolbar>
+        <div class="router-container">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</mat-drawer-container>
