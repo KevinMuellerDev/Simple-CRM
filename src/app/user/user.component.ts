@@ -7,6 +7,8 @@ import { MatCardModule } from '@angular/material/card';
 import { DialogAddUserComponent } from '../dialog-add-user/dialog-add-user.component';
 import { User } from '../../models/user.class';
 import { FirebaseService } from '../shared/services/firebase.service';
+import { UserData } from '../interfaces/user';
+
 
 @Component({
   selector: 'app-user',
@@ -20,13 +22,15 @@ import { FirebaseService } from '../shared/services/firebase.service';
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss'
 })
+
+
 export class UserComponent {
   user = new User();
-  allUsers:any[] =[];
+  allUsers: UserData[] = [];
 
-  constructor(public dialog: MatDialog, private firebase: FirebaseService) {}
+  constructor(public dialog: MatDialog, private firebase: FirebaseService) { }
 
-  liveUserData(){
+  liveUserData() {
     this.allUsers = this.firebase.users;
     return this.allUsers
   }
