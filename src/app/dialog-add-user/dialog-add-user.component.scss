@@ -1,5 +1,13 @@
 .dialog-container{
+    position: relative;
     padding: 24px;
+
+    mat-progress-bar{
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+    }
 }
 
 mat-dialog-content{

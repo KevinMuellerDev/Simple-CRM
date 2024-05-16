@@ -1,6 +1,23 @@
-<p>user works!</p>
+<mat-card>
+    <table class="user-table">
+        <tr>
+            <th>Name</th>
+            <th>E-Mail</th>
+            <th>City</th>
+        </tr>
+        @for (user of liveUserData(); track $index) {
+            <tr>
+                <td>{{user.firstName}}</td>
+                <td>{{user.street}}</td>
+                <td>{{user.city}}</td>
+            </tr>
+        }
+    </table>
+</mat-card>
+
+
 <button (click)="openDialog()"
-matTooltip="Add user"
+        matTooltip="Add user"
         [matTooltipPosition]="'above'"
         matTooltipHideDelay="200" class="add-user-btn" mat-fab color="primary"
         aria-label="Example icon button with a delete icon">

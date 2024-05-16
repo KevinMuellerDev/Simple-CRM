@@ -13,6 +13,10 @@
     min-height: 56px;
     display: flex;
     align-items: center;
+
+    img{
+        max-height: 56px;
+    }
 }
 
 mat-toolbar, mat-toolbar-row{
@@ -41,5 +45,5 @@ ul{
 }
 
 .router-container{
-    padding: 16px 0 0 56px;
+    padding: 16px 56px 0 56px;
 }

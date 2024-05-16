@@ -14,6 +14,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { User } from '../../models/user.class';
 import { FirebaseService } from '../shared/services/firebase.service';
 
@@ -30,7 +31,8 @@ import { FirebaseService } from '../shared/services/firebase.service';
     MatDialogContent,
     MatDialogActions,
     MatDialogClose,
-    MatDatepickerModule],
+    MatDatepickerModule,
+    MatProgressBarModule],
   providers: [
     provideNativeDateAdapter(),
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
@@ -42,11 +44,14 @@ export class DialogAddUserComponent {
 
   user = new User();
   birthDate!: Date;
-  firebaseService= inject(FirebaseService);
+  loading: boolean = false;
+  firebaseService = inject(FirebaseService);
 
   saveUser() {
-    this.birthDate == undefined ? '' : this.user.birthDate = this.birthDate.getTime()
+    this.loading = true;
+    this.birthDate == undefined ? '' : this.user.birthDate = this.birthDate.getTime();
     this.firebaseService.addUser(this.user.toJson());
+    this.loading = false;
   }
 
 }
