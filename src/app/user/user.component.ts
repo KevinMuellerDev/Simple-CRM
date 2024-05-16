@@ -7,7 +7,7 @@ import { MatCardModule } from '@angular/material/card';
 import { DialogAddUserComponent } from '../dialog-add-user/dialog-add-user.component';
 import { User } from '../../models/user.class';
 import { FirebaseService } from '../shared/services/firebase.service';
-import { UserData } from '../interfaces/user';
+import { UserData } from '../interfaces/user.interface';
 
 
 @Component({

@@ -7,7 +7,7 @@
         </tr>
         @for (user of liveUserData(); track $index) {
             <tr>
-                <td>{{user.firstName}}</td>
+                <td>{{user.firstName}} {{user.lastName}}</td>
                 <td>{{user.street}}</td>
                 <td>{{user.city}}</td>
             </tr>
