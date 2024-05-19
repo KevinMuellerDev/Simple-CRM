@@ -8,7 +8,7 @@ import { DialogAddUserComponent } from '../dialog-add-user/dialog-add-user.compo
 import { User } from '../../models/user.class';
 import { FirebaseService } from '../shared/services/firebase.service';
 import { UserData } from '../interfaces/user.interface';
-
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-user',
@@ -18,7 +18,8 @@ import { UserData } from '../interfaces/user.interface';
     MatButtonModule,
     MatTooltipModule,
     MatDialogModule,
-    MatCardModule],
+    MatCardModule,
+    RouterLink],
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss'
 })

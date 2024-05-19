@@ -21,7 +21,7 @@ export class FirebaseService {
     return onSnapshot(this.getUsersRef(), (currentUsers) => {
       this.users = [];
       currentUsers.forEach((user) => {
-          this.users.push(user.data());
+          this.users.push(this.setUserObject(user.data(), user.id));
       });
       console.log(this.users);
     });
@@ -39,4 +39,17 @@ export class FirebaseService {
     return collection(this.firestore, 'users')
   }
 
+
+  setUserObject(obj:any, id: string){
+    return {
+      id: id,
+      firstName: obj.firstName,
+      lastName: obj.lastName,
+      email: obj.email,
+      birthDate: obj.birthDate,
+      street: obj.street,
+      zipCode: obj.zipCode,
+      city: obj.city	
+    }
+  }
 }
