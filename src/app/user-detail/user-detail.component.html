@@ -1,23 +1,35 @@
-@for (data of liveProfileData(); track $index) {
-<mat-card class="user-detail-header">
-    <img src="/assets/img/profile.png" alt="">
-    <div class="user-details">
-        <h2>{{data.firstName}} {{data.lastName}}</h2>
-        <span>{{data.email}}</span>
-    </div>
-</mat-card>
-
-<mat-card class="mt-32">
-    <button mat-icon-button class="details-btn">
-        <mat-icon>more_vert</mat-icon>
-    </button>
-
-    <mat-card-header>
-        <mat-card-title>Address</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-        <span>{{data.street}}</span> <br>
-        <span>{{data.zipCode}} {{data.city}}</span>
-    </mat-card-content>
-</mat-card>
+@if (dataLoaded) {
+    <mat-card class="user-detail-header">
+        <button mat-icon-button class="details-btn" [matMenuTriggerFor]="userMenu">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+    
+        <mat-menu #userMenu="matMenu">
+            <button mat-menu-item (click)="editUserDetail()">Edit</button>
+        </mat-menu>
+    
+        <img src="/assets/img/profile.png" alt="">
+        <div class="user-details">
+            <h2>{{userProfile.firstName}} {{userProfile.lastName}}</h2>
+            <span>{{userProfile.email}}</span>
+        </div>
+    </mat-card>
+    
+    <mat-card class="mt-32">
+        <button mat-icon-button class="details-btn" [matMenuTriggerFor]="addressMenu">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+    
+        <mat-menu #addressMenu="matMenu">
+            <button mat-menu-item (click)="editMenu()">Edit</button>
+        </mat-menu>
+    
+        <mat-card-header>
+            <mat-card-title>Address</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <span>{{userProfile.street}}</span> <br>
+            <span>{{userProfile.zipCode}} {{userProfile.city}}</span>
+        </mat-card-content>
+    </mat-card>
 }
