@@ -11,20 +11,34 @@ export class FirebaseService {
 
   unsubGuests;
 
-  users:any[] = [];
 
-  constructor() { 
+  users: any[] = [];
+  profileData: any[] = [];
+
+  constructor() {
     this.unsubGuests = this.getUserData();
+
   }
 
   getUserData() {
     return onSnapshot(this.getUsersRef(), (currentUsers) => {
       this.users = [];
       currentUsers.forEach((user) => {
-          this.users.push(this.setUserObject(user.data(), user.id));
+        this.users.push(this.setUserObject(user.data(), user.id));
       });
       console.log(this.users);
     });
+  }
+
+  async getProfileData(id?: any) {
+    this.profileData=[];
+    const docRef = doc(this.firestore, "users", id);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      this.profileData.push(docSnap.data());
+    } else {
+      console.log("No such document!");
+    }
   }
 
   async addUser(user: any) {
@@ -39,8 +53,11 @@ export class FirebaseService {
     return collection(this.firestore, 'users')
   }
 
+  getProfileRef(id: any) {
+    return (this.getUsersRef(), id)
+  }
 
-  setUserObject(obj:any, id: string){
+  setUserObject(obj: any, id: string) {
     return {
       id: id,
       firstName: obj.firstName,
@@ -49,7 +66,7 @@ export class FirebaseService {
       birthDate: obj.birthDate,
       street: obj.street,
       zipCode: obj.zipCode,
-      city: obj.city	
+      city: obj.city
     }
   }
 }
