@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { User } from '../../models/user.class';
 import {
   MatDialog,
@@ -17,6 +17,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { FirebaseService } from '../shared/services/firebase.service';
+import { timestamp } from 'rxjs';
+import { UserDetailComponent } from '../user-detail/user-detail.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dialog-edit-user',
@@ -29,16 +32,31 @@ import { FirebaseService } from '../shared/services/firebase.service';
     MatDialogActions,
     MatDialogClose,
     MatDatepickerModule,
-    MatProgressBarModule],
+    MatProgressBarModule,
+    UserDetailComponent],
+  providers: [
+    provideNativeDateAdapter(),
+    { provide: MAT_DATE_LOCALE, useValue: 'de' }
+  ],
   templateUrl: './dialog-edit-user.component.html',
   styleUrl: './dialog-edit-user.component.scss'
 })
 export class DialogEditUserComponent {
   loading: boolean = false;
   user!: User;
+  userId!: String;
+  birthDate!: Date;
+  firebaseService = inject(FirebaseService);
 
   ngOnInit(): void {
-    console.log(this.user);
+    this.user.birthDate == undefined ? '' : this.birthDate = new Date(this.user.birthDate);
+  }
+
+  async saveUser() {
+    this.loading = true;
+    this.birthDate == undefined ? '' : this.user.birthDate = this.birthDate.getTime();
+    await this.firebaseService.updateUser(this.userId, this.user.toJson());
+    this.loading = false;
   }
 
 }

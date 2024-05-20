@@ -11,13 +11,11 @@ export class FirebaseService {
 
   unsubGuests;
 
-
   users: any[] = [];
   profileData: any[] = [];
 
   constructor() {
     this.unsubGuests = this.getUserData();
-
   }
 
   getUserData() {
@@ -31,7 +29,7 @@ export class FirebaseService {
   }
 
   async getProfileData(id?: any) {
-    this.profileData=[];
+    this.profileData = [];
     const docRef = doc(this.firestore, "users", id);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
@@ -40,6 +38,7 @@ export class FirebaseService {
       console.log("No such document!");
     }
   }
+  
 
   async addUser(user: any) {
     const docRef = await addDoc(this.getUsersRef(), user)
@@ -47,6 +46,14 @@ export class FirebaseService {
       .then(() => {
         console.log('adding user finished', user);
       })
+  }
+
+  async updateUser(id: any, user: any) {
+    let docRef = doc(this.firestore, 'users',id)
+    console.log(id)
+      await updateDoc(docRef, user)
+      .catch(err => console.error(err)
+    );
   }
 
   getUsersRef() {

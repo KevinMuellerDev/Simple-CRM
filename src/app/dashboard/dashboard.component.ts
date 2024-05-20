@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FirebaseService } from '../shared/services/firebase.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,4 +10,6 @@ import { Component } from '@angular/core';
 })
 export class DashboardComponent {
 
+
+  constructor(private firebase: FirebaseService){}
 }

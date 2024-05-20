@@ -35,7 +35,7 @@ import { FirebaseService } from '../shared/services/firebase.service';
     MatProgressBarModule],
   providers: [
     provideNativeDateAdapter(),
-    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
+    { provide: MAT_DATE_LOCALE, useValue: 'de' }
   ],
   templateUrl: './dialog-add-user.component.html',
   styleUrl: './dialog-add-user.component.scss'

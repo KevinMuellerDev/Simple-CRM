@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   MatDialog,
   MAT_DIALOG_DATA,
@@ -34,11 +34,19 @@ import { UserData } from '../interfaces/user.interface';
   styleUrl: './dialog-edit-address.component.scss'
 })
 export class DialogEditAddressComponent {
-  loading:boolean = false;
-  user!:User;
+  loading: boolean = false;
+  user!: User;
+  userId!: String;
+  firebaseService = inject(FirebaseService);
 
   ngOnInit(): void {
     console.log(this.user);
+  }
+
+  async saveUser() {
+    this.loading = true;
+    await this.firebaseService.updateUser(this.userId, this.user.toJson());
+    this.loading = false;
   }
 
 }

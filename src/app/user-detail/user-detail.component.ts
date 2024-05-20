@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, SimpleChanges } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
@@ -20,18 +20,18 @@ import { User } from '../../models/user.class';
 })
 export class UserDetailComponent {
 
-  userID: any = '';
+  userId: any = '';
   userProfile!: User;
   dataLoaded:boolean = false;
 
   constructor(private route: ActivatedRoute, private firebase: FirebaseService, private dialog: MatDialog) { }
-
+  
   async ngOnInit() {
     this.route.paramMap.subscribe(paramMap => {
-      this.userID = paramMap.get('id');
-      console.log('GOT ID:', this.userID);
+      this.userId = paramMap.get('id');
+      console.log('GOT ID:', this.userId);
     });
-    await this.firebase.getProfileData(this.userID);
+    await this.firebase.getProfileData(this.userId);
     this.liveProfileData();
     this.dataLoaded = true;
   }
@@ -42,12 +42,22 @@ export class UserDetailComponent {
 
   editUserDetail() {
     const dialog = this.dialog.open(DialogEditUserComponent);
-    dialog.componentInstance.user = this.userProfile
+    dialog.componentInstance.user = new User(this.userProfile);
+    dialog.componentInstance.userId = this.userId;
+    dialog.afterClosed()
+    .subscribe(() => {
+      this.ngOnInit();
+    });
   }
 
   editMenu() {
     const dialog = this.dialog.open(DialogEditAddressComponent);
-    dialog.componentInstance.user = this.userProfile
+    dialog.componentInstance.user = new User(this.userProfile);
+    dialog.componentInstance.userId = this.userId;
+    dialog.afterClosed()
+    .subscribe(() => {
+      this.ngOnInit();
+    });
   }
 
 }
