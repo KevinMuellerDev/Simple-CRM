@@ -16,7 +16,7 @@ export class FirebaseService {
 
   users: any[] = [];
   profileData: any[] = [];
-  products:any[] =[];
+  products: any[] = [];
   id: any;
 
   constructor() {
@@ -33,8 +33,9 @@ export class FirebaseService {
     });
   }
 
-  async getProductData(id?:any) {
+  async getProductData(id?: any) {
     const querySnapshot = await getDocs(collection(this.firestore, 'users', id, 'sales'));
+    this.products = [];
     querySnapshot.forEach((doc) => {
       console.log(doc.id, " => ", doc.data());
       this.products.push(this.setProductObject(doc.data(), doc.id))

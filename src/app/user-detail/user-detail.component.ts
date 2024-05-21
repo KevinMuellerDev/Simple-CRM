@@ -35,7 +35,7 @@ export class UserDetailComponent {
     });
     await this.firebase.getProfileData(this.userId);
     this.liveProfileData();
-    await this.liveProductData();
+    this.liveProductData();
     this.getBirthdate();
     this.dataLoaded = true;
   }
@@ -47,7 +47,7 @@ export class UserDetailComponent {
   async liveProductData() {
     this.firebase.getProductData(this.userId)
     this.products = this.firebase.products;
-    console.log(this.products)
+    console.log(this.products.length)
   }
 
   editUserDetail() {
