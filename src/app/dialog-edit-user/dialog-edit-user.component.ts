@@ -14,7 +14,6 @@ import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { FirebaseService } from '../shared/services/firebase.service';
 import { timestamp } from 'rxjs';
@@ -34,10 +33,6 @@ import { Router } from '@angular/router';
     MatDatepickerModule,
     MatProgressBarModule,
     UserDetailComponent],
-  providers: [
-    provideNativeDateAdapter(),
-    { provide: MAT_DATE_LOCALE, useValue: 'de' }
-  ],
   templateUrl: './dialog-edit-user.component.html',
   styleUrl: './dialog-edit-user.component.scss'
 })
@@ -48,9 +43,7 @@ export class DialogEditUserComponent {
   birthDate!: Date;
   firebaseService = inject(FirebaseService);
 
-  ngOnInit(): void {
-    this.user.birthDate == undefined ? '' : this.birthDate = new Date(this.user.birthDate);
-  }
+  ngOnInit(): void {}
 
   async saveUser() {
     this.loading = true;

@@ -4,7 +4,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { ActivatedRoute } from '@angular/router';
 import { FirebaseService } from '../shared/services/firebase.service';
-import { UserData } from '../interfaces/user.interface';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogEditUserComponent } from '../dialog-edit-user/dialog-edit-user.component';
@@ -19,7 +18,8 @@ import { User } from '../../models/user.class';
   styleUrl: './user-detail.component.scss'
 })
 export class UserDetailComponent {
-
+  birthDate!: Date;
+  fullDate!: string;
   userId: any = '';
   userProfile!: User;
   dataLoaded:boolean = false;
@@ -33,7 +33,9 @@ export class UserDetailComponent {
     });
     await this.firebase.getProfileData(this.userId);
     this.liveProfileData();
+    this.getBirthdate();
     this.dataLoaded = true;
+
   }
 
   liveProfileData() {
@@ -58,6 +60,18 @@ export class UserDetailComponent {
     .subscribe(() => {
       this.ngOnInit();
     });
+  }
+
+  getBirthdate(){
+    this.userProfile.birthDate == undefined ? '' : this.birthDate = new Date(this.userProfile.birthDate);
+    let dd = this.birthDate.getDate();
+    let mm =this.birthDate.getMonth() + 1;
+    let yyyy = this.birthDate.getFullYear();
+
+    dd < 10 ? dd =+ '0' + dd : dd = dd;
+    mm < 10 ? mm =+ '0' + mm : mm = mm;
+
+    this.fullDate = dd + '.' + mm + '.' + yyyy;
   }
 
 }

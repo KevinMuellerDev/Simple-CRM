@@ -5,6 +5,7 @@ import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { provideStorage, getStorage } from '@angular/fire/storage';
 import { Environment } from './environment';
 
 
@@ -21,5 +22,6 @@ export const appConfig: ApplicationConfig = {
       "apiKey":Environment.API_KEY,
       "authDomain":"simple-crm-dfd4a.firebaseapp.com",
       "messagingSenderId":"458563173555"})), 
-      provideFirestore(() => getFirestore())]
+      provideFirestore(() => getFirestore()),
+      provideStorage(() => getStorage())]
 };
