@@ -22,6 +22,7 @@ export class UserDetailComponent {
   fullDate!: string;
   userId: any = '';
   userProfile!: User;
+  products: any;
   dataLoaded: boolean = false;
   tempPicture: string = '/assets/img/profile.png';
 
@@ -34,12 +35,19 @@ export class UserDetailComponent {
     });
     await this.firebase.getProfileData(this.userId);
     this.liveProfileData();
+    await this.liveProductData();
     this.getBirthdate();
     this.dataLoaded = true;
   }
 
   liveProfileData() {
     this.userProfile = this.firebase.profileData[0]
+  }
+
+  async liveProductData() {
+    this.firebase.getProductData(this.userId)
+    this.products = this.firebase.products;
+    console.log(this.products)
   }
 
   editUserDetail() {
@@ -76,4 +84,7 @@ export class UserDetailComponent {
     this.fullDate = dd + '.' + mm + '.' + yyyy;
   }
 
+  ngOnDestroy() {
+    this.firebase.ngOnDestroy();
+  }
 }

@@ -58,12 +58,10 @@ export class DialogEditUserComponent {
     });
   }
 
-
   onFileSelected(input: HTMLInputElement) {
     if (!input.files || (input.files && !this.isValid(input))) return
     this.files = input.files;
     this.fileName = this.files.item(0)?.name
-    
   }
 
 

@@ -37,5 +37,11 @@
             <span>{{userProfile.zipCode}} {{userProfile.city}}</span>
         </mat-card-content>
     </mat-card>
+
+    <mat-card class="mt-32">
+        @for (product of products; track $index) {
+            <div>{{product.product}} {{product.price}}</div>
+        }
+    </mat-card>
 }
 
