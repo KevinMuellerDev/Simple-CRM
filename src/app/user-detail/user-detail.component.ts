@@ -22,10 +22,11 @@ export class UserDetailComponent {
   fullDate!: string;
   userId: any = '';
   userProfile!: User;
-  dataLoaded:boolean = false;
+  dataLoaded: boolean = false;
+  tempPicture: string = '/assets/img/profile.png';
 
   constructor(private route: ActivatedRoute, private firebase: FirebaseService, private dialog: MatDialog) { }
-  
+
   async ngOnInit() {
     this.route.paramMap.subscribe(paramMap => {
       this.userId = paramMap.get('id');
@@ -35,7 +36,6 @@ export class UserDetailComponent {
     this.liveProfileData();
     this.getBirthdate();
     this.dataLoaded = true;
-
   }
 
   liveProfileData() {
@@ -47,9 +47,11 @@ export class UserDetailComponent {
     dialog.componentInstance.user = new User(this.userProfile);
     dialog.componentInstance.userId = this.userId;
     dialog.afterClosed()
-    .subscribe(() => {
-      this.ngOnInit();
-    });
+      .subscribe(() => {
+        setTimeout(() => {
+          this.ngOnInit();
+        }, 1100);
+      });
   }
 
   editMenu() {
@@ -57,19 +59,19 @@ export class UserDetailComponent {
     dialog.componentInstance.user = new User(this.userProfile);
     dialog.componentInstance.userId = this.userId;
     dialog.afterClosed()
-    .subscribe(() => {
-      this.ngOnInit();
-    });
+      .subscribe(() => {
+        this.ngOnInit();
+      });
   }
 
-  getBirthdate(){
+  getBirthdate() {
     this.userProfile.birthDate == undefined ? '' : this.birthDate = new Date(this.userProfile.birthDate);
     let dd = this.birthDate.getDate();
-    let mm =this.birthDate.getMonth() + 1;
+    let mm = this.birthDate.getMonth() + 1;
     let yyyy = this.birthDate.getFullYear();
 
-    dd < 10 ? dd =+ '0' + dd : dd = dd;
-    mm < 10 ? mm =+ '0' + mm : mm = mm;
+    dd < 10 ? dd = + '0' + dd : dd = dd;
+    mm < 10 ? mm = + '0' + mm : mm = mm;
 
     this.fullDate = dd + '.' + mm + '.' + yyyy;
   }

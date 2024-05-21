@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { User } from '../../models/user.class';
 import {
   MatDialog,
@@ -19,6 +19,7 @@ import { FirebaseService } from '../shared/services/firebase.service';
 import { timestamp } from 'rxjs';
 import { UserDetailComponent } from '../user-detail/user-detail.component';
 import { Router } from '@angular/router';
+import { Storage, ref, uploadBytesResumable, getDownloadURL } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-dialog-edit-user',
@@ -36,20 +37,57 @@ import { Router } from '@angular/router';
   templateUrl: './dialog-edit-user.component.html',
   styleUrl: './dialog-edit-user.component.scss'
 })
+
 export class DialogEditUserComponent {
   loading: boolean = false;
   user!: User;
   userId!: String;
   birthDate!: Date;
+  files!: FileList;
+  fileName!:string | undefined;
   firebaseService = inject(FirebaseService);
+  private readonly storage: Storage = inject(Storage);
 
-  ngOnInit(): void {}
 
   async saveUser() {
     this.loading = true;
-    this.birthDate == undefined ? '' : this.user.birthDate = this.birthDate.getTime();
-    await this.firebaseService.updateUser(this.userId, this.user.toJson());
-    this.loading = false;
+    await this.uploadFile().then(() => {
+      this.birthDate == undefined ? '' : this.user.birthDate = this.birthDate.getTime();
+      this.firebaseService.updateUser(this.userId, this.user.toJson());
+      this.loading = false;
+    });
+  }
+
+
+  onFileSelected(input: HTMLInputElement) {
+    if (!input.files || (input.files && !this.isValid(input))) return
+    this.files = input.files;
+    this.fileName = this.files.item(0)?.name
+    
+  }
+
+
+  isValid(input:HTMLInputElement){
+    let dataType = input.files?.item(0)?.type
+    dataType = dataType?.split('/').pop();
+    
+    return (dataType ==='jpeg' || dataType === 'jpg' || dataType === 'png' || dataType === 'gif')
+  }
+
+
+  async uploadFile() {
+    if (this.files == undefined) return
+    for (let i = 0; i < this.files.length; i++) {
+      const file = this.files.item(i);
+      if (file) {
+        const storageRef = ref(this.storage, this.userId + '/' + 'profile');
+        await uploadBytesResumable(storageRef, file);
+        await getDownloadURL(storageRef).then((url) => {
+          this.user.profilePicture = url;
+          console.log(this.user.profilePicture);
+        })
+      }
+    }
   }
 
 }

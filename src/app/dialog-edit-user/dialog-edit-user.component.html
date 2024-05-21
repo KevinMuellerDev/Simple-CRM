@@ -23,6 +23,13 @@
             </mat-form-field>
         </div>
 
+        <div class="upload">
+            <button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
+            <input hidden (change)="onFileSelected(fileInput)" #fileInput type="file" id="file">
+            <span>{{fileName}}</span>
+            <!-- <mat-hint>Please enter your E-Mail</mat-hint> -->
+        </div>
+
     </mat-dialog-content>
     <mat-dialog-actions>
         <button [disabled]="loading" mat-button [mat-dialog-close]="">Cancel</button>

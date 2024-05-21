@@ -6,5 +6,6 @@ export interface UserData {
     birthDate: number,
     street: string,
     zipCode: number,
-    city: string
+    city: string,
+    profilePicture: string
 }

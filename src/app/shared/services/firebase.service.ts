@@ -73,7 +73,8 @@ export class FirebaseService {
       birthDate: obj.birthDate,
       street: obj.street,
       zipCode: obj.zipCode,
-      city: obj.city
+      city: obj.city,
+      profilePicture: obj.profilePicture
     }
   }
 }
