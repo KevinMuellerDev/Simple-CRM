@@ -1,0 +1,22 @@
+<div class="dialog-container">
+    @if (loading) {<mat-progress-bar mode="indeterminate"></mat-progress-bar>}
+    <h2 mat-dialog-title>Add User</h2>
+    <mat-dialog-content>
+        <div>
+            <mat-form-field class="mr-16" appearance="outline">
+                <mat-label>Product</mat-label>
+                <input [disabled]="loading" [(ngModel)]="product.product" matInput placeholder="Product name">
+                <!-- <mat-hint>Please enter your first name</mat-hint> -->
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Price</mat-label>
+                <input currencyMask [options]="{ prefix: '€ ', thousands: '.', decimal: ',', precision:2 }" [disabled]="loading" [(ngModel)]="product.price" matInput placeholder="Price">
+                <!-- <mat-hint>Please enter your last name</mat-hint> -->
+            </mat-form-field>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button [disabled]="loading" mat-button [mat-dialog-close]="">Cancel</button>
+        <button [disabled]="loading" mat-button (click)="saveUserProduct()" [mat-dialog-close]="" cdkFocusInitial>Save</button>
+    </mat-dialog-actions>
+</div>

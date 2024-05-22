@@ -1,64 +1,71 @@
 @if (dataLoaded) {
-<mat-card class="user-detail-header">
-    <button mat-icon-button class="details-btn" [matMenuTriggerFor]="userMenu">
-        <mat-icon>more_vert</mat-icon>
-    </button>
-
-    <mat-menu #userMenu="matMenu">
-        <button mat-menu-item (click)="editUserDetail()">Edit</button>
-    </mat-menu>
-
-    <img [src]="userProfile.profilePicture != '' ? userProfile.profilePicture : tempPicture" alt="">
-    <div class="user-details">
-        <h2>{{userProfile.firstName}} {{userProfile.lastName}}</h2>
-        <a [href]="'mailto:' + userProfile.email">{{userProfile.email}}</a>
+    <div class="pb-24">
+        <mat-card class="user-detail-header">
+            <button mat-icon-button class="details-btn" [matMenuTriggerFor]="userMenu">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+        
+            <mat-menu #userMenu="matMenu">
+                <button mat-menu-item (click)="editUserDetail()">Edit</button>
+            </mat-menu>
+        
+            <img [src]="userProfile.profilePicture != '' ? userProfile.profilePicture : tempPicture" alt="">
+            <div class="user-details">
+                <h2>{{userProfile.firstName}} {{userProfile.lastName}}</h2>
+                <a [href]="'mailto:' + userProfile.email">{{userProfile.email}}</a>
+            </div>
+        </mat-card>
+        
+        <mat-card class="mt-32">
+            <button mat-icon-button class="details-btn" [matMenuTriggerFor]="addressMenu">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+        
+            <mat-menu #addressMenu="matMenu">
+                <button mat-menu-item (click)="editMenu()">Edit</button>
+            </mat-menu>
+            <mat-card-header>
+                <mat-card-title>Birthdate</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <span>{{fullDate}}</span> <br>
+            </mat-card-content>
+            <mat-card-header>
+                <mat-card-title>Address</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <span>{{userProfile.street}}</span> <br>
+                <span>{{userProfile.zipCode}} {{userProfile.city}}</span>
+            </mat-card-content>
+        </mat-card>
+        
+        
+        
+        <mat-card class="mt-32">
+            <mat-card-header class="product-head">
+                <mat-card-title>Bought products</mat-card-title>
+                <button (click)="editBoughtProducts()" matTooltip="Add user" [matTooltipPosition]="'above'" matTooltipHideDelay="200"
+                    class="add-user-btn" mat-fab color="primary" aria-label="Example icon button with a delete icon">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </mat-card-header>
+            <table class="user-table">
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                </tr>
+        
+                @for (product of products; track $index) {
+                <tr>
+                    <td>{{product.product}}</td>
+                    <td>{{product.price}}</td>
+                </tr>
+                }
+            </table>
+        </mat-card>
+        
     </div>
-</mat-card>
 
-<mat-card class="mt-32">
-    <button mat-icon-button class="details-btn" [matMenuTriggerFor]="addressMenu">
-        <mat-icon>more_vert</mat-icon>
-    </button>
-
-    <mat-menu #addressMenu="matMenu">
-        <button mat-menu-item (click)="editMenu()">Edit</button>
-    </mat-menu>
-    <mat-card-header>
-        <mat-card-title>Birthdate</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-        <span>{{fullDate}}</span> <br>
-    </mat-card-content>
-    <mat-card-header>
-        <mat-card-title>Address</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-        <span>{{userProfile.street}}</span> <br>
-        <span>{{userProfile.zipCode}} {{userProfile.city}}</span>
-    </mat-card-content>
-</mat-card>
-
-
-@if (products.length > 0) {
-    <mat-card class="mt-32">
-        <mat-card-header>
-            <mat-card-title>Bought products</mat-card-title>
-        </mat-card-header>
-        <table class="user-table">
-            <tr>
-                <th>Product</th>
-                <th>Price</th>
-            </tr>
-    
-            @for (product of products; track $index) {
-            <tr>
-                <td>{{product.product}}</td>
-                <td>{{product.price}}</td>
-            </tr>
-            }
-        </table>
-    </mat-card>
-}
 
 
 }

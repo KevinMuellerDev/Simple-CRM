@@ -62,6 +62,14 @@ export class FirebaseService {
       })
   }
 
+  async addProduct(id:any, content:any){
+    const docRef = await addDoc(this.getUserSalesRef(id), content)
+      .catch(err => console.error(err))
+      .then(() => {
+        console.log('adding user finished', content);
+      })
+  }
+
   async updateUser(id: any, user: any) {
     let docRef = doc(this.firestore, 'users', id)
     console.log(id)

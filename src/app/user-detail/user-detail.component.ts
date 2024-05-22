@@ -6,14 +6,26 @@ import { ActivatedRoute } from '@angular/router';
 import { FirebaseService } from '../shared/services/firebase.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { DialogEditUserComponent } from '../dialog-edit-user/dialog-edit-user.component';
 import { DialogEditAddressComponent } from '../dialog-edit-address/dialog-edit-address.component';
+import { DialogAddProductComponent } from '../dialog-add-product/dialog-add-product.component';
 import { User } from '../../models/user.class';
+
 
 @Component({
   selector: 'app-user-detail',
   standalone: true,
-  imports: [MatCardModule, MatIconModule, MatButtonModule, MatMenuModule, DialogEditUserComponent, DialogEditAddressComponent],
+  imports: [
+    MatCardModule,
+    MatIconModule,
+    MatButtonModule,
+    MatMenuModule,
+    DialogEditUserComponent,
+    DialogEditAddressComponent,
+    DialogAddProductComponent,
+    MatTooltipModule
+  ],
   templateUrl: './user-detail.component.html',
   styleUrl: './user-detail.component.scss'
 })
@@ -45,7 +57,7 @@ export class UserDetailComponent {
   }
 
   async liveProductData() {
-    this.firebase.getProductData(this.userId)
+    await this.firebase.getProductData(this.userId)
     this.products = this.firebase.products;
     console.log(this.products.length)
   }
@@ -72,6 +84,15 @@ export class UserDetailComponent {
       });
   }
 
+  editBoughtProducts(){
+    const dialog = this.dialog.open(DialogAddProductComponent);
+    dialog.componentInstance.userId = this.userId;
+    dialog.afterClosed()
+      .subscribe(() => {
+        this.ngOnInit();
+      });
+  }
+
   getBirthdate() {
     this.userProfile.birthDate == undefined ? '' : this.birthDate = new Date(this.userProfile.birthDate);
     let dd = this.birthDate.getDate();
@@ -83,6 +104,7 @@ export class UserDetailComponent {
 
     this.fullDate = dd + '.' + mm + '.' + yyyy;
   }
+
 
   ngOnDestroy() {
     this.firebase.ngOnDestroy();
