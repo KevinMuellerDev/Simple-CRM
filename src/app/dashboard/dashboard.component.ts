@@ -23,7 +23,7 @@ export type ChartOptions = {
   dataLabels: ApexDataLabels;
   yaxis: ApexYAxis;
   title: ApexTitleSubtitle;
-  labels: string[];
+  labels: string[]
   legend: ApexLegend;
   subtitle: ApexTitleSubtitle;
 };
@@ -52,7 +52,6 @@ export class DashboardComponent {
       chart: {
         type: "area",
         height: 350,
-        width: '50%',
         zoom: {
           enabled: false
         }
@@ -74,7 +73,7 @@ export class DashboardComponent {
       },
       labels: series.monthDataSeries1.dates,
       xaxis: {
-        type: "datetime"
+        type: "datetime",
       },
       yaxis: {
         opposite: true

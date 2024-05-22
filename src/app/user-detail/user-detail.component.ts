@@ -62,7 +62,9 @@ export class UserDetailComponent {
     await this.firebase.getProductData(this.userId)
     this.products = this.firebase.products;
     console.log(this.products)
-    this.getPurchaseDate();
+    if (this.products.length != 0) {
+      this.getPurchaseDate();
+    }
   }
 
   editUserDetail() {
