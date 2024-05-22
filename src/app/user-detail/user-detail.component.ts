@@ -31,7 +31,9 @@ import { User } from '../../models/user.class';
 })
 export class UserDetailComponent {
   birthDate!: Date;
+  dateOfPurchase!:Date;
   fullDate!: string;
+  fullPurchaseDate!: string;
   userId: any = '';
   userProfile!: User;
   products: any;
@@ -59,7 +61,8 @@ export class UserDetailComponent {
   async liveProductData() {
     await this.firebase.getProductData(this.userId)
     this.products = this.firebase.products;
-    console.log(this.products.length)
+    console.log(this.products)
+    this.getPurchaseDate();
   }
 
   editUserDetail() {
@@ -95,14 +98,26 @@ export class UserDetailComponent {
 
   getBirthdate() {
     this.userProfile.birthDate == undefined ? '' : this.birthDate = new Date(this.userProfile.birthDate);
-    let dd = this.birthDate.getDate();
-    let mm = this.birthDate.getMonth() + 1;
-    let yyyy = this.birthDate.getFullYear();
+    let dd = this.birthDate.getDate().toString();
+    let mm = (this.birthDate.getMonth() + 1).toString();
+    let yyyy = this.birthDate.getFullYear().toString();
 
-    dd < 10 ? dd = + '0' + dd : dd = dd;
-    mm < 10 ? mm = + '0' + mm : mm = mm;
+    Number(dd) < 10 ? dd =  '0' + dd : dd = dd;
+    Number(mm) < 10 ? mm =  '0' + mm : mm = mm;
 
     this.fullDate = dd + '.' + mm + '.' + yyyy;
+  }
+
+  getPurchaseDate() {
+    this.products[0].dateOfPurchase == undefined ? '' : this.dateOfPurchase = new Date(this.products[0].dateOfPurchase);
+    let dd = this.dateOfPurchase.getDate().toString();
+    let mm = (this.dateOfPurchase.getMonth() + 1).toString();
+    let yyyy = this.dateOfPurchase.getFullYear().toString();
+
+    Number(dd) < 10 ? dd =  '0' + dd : dd = dd;
+    Number(mm) < 10 ? mm =  '0' + mm : mm = mm;
+
+    this.fullPurchaseDate = dd + '.' + mm + '.' + yyyy;
   }
 
 

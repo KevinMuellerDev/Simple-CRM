@@ -66,7 +66,7 @@ export class FirebaseService {
     const docRef = await addDoc(this.getUserSalesRef(id), content)
       .catch(err => console.error(err))
       .then(() => {
-        console.log('adding user finished', content);
+        console.log('adding product finished', content);
       })
   }
 
@@ -110,7 +110,8 @@ export class FirebaseService {
     return {
       id: id,
       product: obj.product,
-      price: obj.price
+      price: obj.price,
+      dateOfPurchase: obj.dateOfPurchase
     }
   }
 

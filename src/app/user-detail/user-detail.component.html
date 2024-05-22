@@ -53,12 +53,14 @@
                 <tr>
                     <th>Product</th>
                     <th>Price</th>
+                    <th>Date of purchase</th>
                 </tr>
         
                 @for (product of products; track $index) {
                 <tr>
                     <td>{{product.product}}</td>
                     <td>{{product.price}}</td>
+                    <td>{{fullPurchaseDate}}</td>
                 </tr>
                 }
             </table>

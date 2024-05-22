@@ -14,6 +14,15 @@
                 <!-- <mat-hint>Please enter your last name</mat-hint> -->
             </mat-form-field>
         </div>
+        <div>
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Date of purchase</mat-label>
+                <input [disabled]="loading" [(ngModel)]="dateOfPurchase" matInput placeholder="Date of purchase" [matDatepicker]="picker1">
+                <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+                <!-- <mat-hint>Please enter a date</mat-hint> -->
+            </mat-form-field>
+        </div>
     </mat-dialog-content>
     <mat-dialog-actions>
         <button [disabled]="loading" mat-button [mat-dialog-close]="">Cancel</button>
