@@ -32,7 +32,7 @@ import { MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/cor
     MatProgressBarModule],
     providers: [
       provideNativeDateAdapter(),
-      { provide: MAT_DATE_LOCALE, useValue: 'de' }
+      { provide: MAT_DATE_LOCALE, useValue: 'de' },
     ],
   templateUrl: './dialog-edit-address.component.html',
   styleUrl: './dialog-edit-address.component.scss'

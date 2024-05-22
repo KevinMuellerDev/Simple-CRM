@@ -35,7 +35,7 @@ import { CurrencyMaskModule } from 'ng2-currency-mask';
     CurrencyMaskModule],
   providers: [
     provideNativeDateAdapter(),
-    { provide: MAT_DATE_LOCALE, useValue: 'de' }
+    { provide: MAT_DATE_LOCALE, useValue: 'de' },
   ],
   templateUrl: './dialog-add-product.component.html',
   styleUrl: './dialog-add-product.component.scss'
