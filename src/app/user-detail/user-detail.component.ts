@@ -11,6 +11,7 @@ import { DialogEditUserComponent } from '../dialog-edit-user/dialog-edit-user.co
 import { DialogEditAddressComponent } from '../dialog-edit-address/dialog-edit-address.component';
 import { DialogAddProductComponent } from '../dialog-add-product/dialog-add-product.component';
 import { User } from '../../models/user.class';
+import { ProductData } from '../interfaces/product.interface';
 
 
 @Component({
@@ -34,9 +35,9 @@ export class UserDetailComponent {
   dateOfPurchase!:Date;
   fullDate!: string;
   fullPurchaseDate!: string;
-  userId: any = '';
+  userId: string | null = '';
   userProfile!: User;
-  products: any;
+  products!: ProductData[];
   dataLoaded: boolean = false;
   tempPicture: string = '/assets/img/profile.png';
 
@@ -70,19 +71,19 @@ export class UserDetailComponent {
   editUserDetail() {
     const dialog = this.dialog.open(DialogEditUserComponent);
     dialog.componentInstance.user = new User(this.userProfile);
-    dialog.componentInstance.userId = this.userId;
+    dialog.componentInstance.userId = this.userId!;
     dialog.afterClosed()
       .subscribe(() => {
         setTimeout(() => {
           this.ngOnInit();
-        }, 1100);
+        }, 1300);
       });
   }
 
   editMenu() {
     const dialog = this.dialog.open(DialogEditAddressComponent);
     dialog.componentInstance.user = new User(this.userProfile);
-    dialog.componentInstance.userId = this.userId;
+    dialog.componentInstance.userId = this.userId!;
     dialog.afterClosed()
       .subscribe(() => {
         this.ngOnInit();
@@ -91,7 +92,7 @@ export class UserDetailComponent {
 
   editBoughtProducts(){
     const dialog = this.dialog.open(DialogAddProductComponent);
-    dialog.componentInstance.userId = this.userId;
+    dialog.componentInstance.userId = this.userId!;
     dialog.afterClosed()
       .subscribe(() => {
         this.ngOnInit();

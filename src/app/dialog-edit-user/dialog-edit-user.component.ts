@@ -44,7 +44,7 @@ export class DialogEditUserComponent {
   userId!: String;
   birthDate!: Date;
   files!: FileList;
-  fileName!:string | undefined;
+  fileName!: string | undefined;
   firebaseService = inject(FirebaseService);
   private readonly storage: Storage = inject(Storage);
 
@@ -59,17 +59,22 @@ export class DialogEditUserComponent {
   }
 
   onFileSelected(input: HTMLInputElement) {
+    if (input.files?.item(0)?.size! > 1048576) {
+      this.fileName = "This file exceeds the size of 1024kb !"
+      return
+    }
     if (!input.files || (input.files && !this.isValid(input))) return
     this.files = input.files;
     this.fileName = this.files.item(0)?.name
   }
 
 
-  isValid(input:HTMLInputElement){
+  isValid(input: HTMLInputElement) {
     let dataType = input.files?.item(0)?.type
     dataType = dataType?.split('/').pop();
-    
-    return (dataType ==='jpeg' || dataType === 'jpg' || dataType === 'png' || dataType === 'gif')
+    console.log(input.files?.item(0)?.size!);
+
+    return (dataType === 'jpeg' || dataType === 'jpg' || dataType === 'png' || dataType === 'gif')
   }
 
 

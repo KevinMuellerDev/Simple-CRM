@@ -43,7 +43,7 @@ import { CurrencyMaskModule } from 'ng2-currency-mask';
 export class DialogAddProductComponent {
   loading: boolean = false;
   product = new Product();
-  userId!: any;
+  userId!: string;
   dateOfPurchase!:Date;
   firebaseService = inject(FirebaseService);
 
