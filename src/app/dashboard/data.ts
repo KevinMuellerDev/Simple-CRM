@@ -1,4 +1,4 @@
-export const series = {
+export let series = {
     monthDataSeries1: {
       prices: [
         8107.85,

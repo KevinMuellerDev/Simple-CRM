@@ -19,9 +19,11 @@ export class FirebaseService {
   products: any[] = [];
   id: any;
 
+
   constructor() {
     this.unsubGuests = this.getUserData();
   }
+
 
   getUserData() {
     return onSnapshot(this.getUsersRef(), (currentUsers) => {
@@ -33,14 +35,16 @@ export class FirebaseService {
     });
   }
 
+
   async getProductData(id?: any) {
     const querySnapshot = await getDocs(collection(this.firestore, 'users', id, 'sales'));
     this.products = [];
     querySnapshot.forEach((doc) => {
       console.log(doc.id, " => ", doc.data());
-      this.products.push(this.setProductObject(doc.data(), doc.id))
+      this.products.push(this.setProductObject(doc.data(), doc.id));
     });
   }
+
 
   async getProfileData(id?: any) {
     this.profileData = [];
@@ -62,6 +66,7 @@ export class FirebaseService {
       })
   }
 
+
   async addProduct(id:any, content:any){
     const docRef = await addDoc(this.getUserSalesRef(id), content)
       .catch(err => console.error(err))
@@ -69,6 +74,7 @@ export class FirebaseService {
         console.log('adding product finished', content);
       })
   }
+
 
   async updateUser(id: any, user: any) {
     let docRef = doc(this.firestore, 'users', id)
