@@ -4,6 +4,8 @@ import { Component, inject } from '@angular/core';
 import { keepUnstableUntilFirst } from '@angular/fire';
 import { Firestore, Unsubscribe, addDoc, collection, doc, getDoc, getDocs, onSnapshot, updateDoc, where } from '@angular/fire/firestore';
 import { UnsubscriptionError } from 'rxjs';
+import { series } from '../../dashboard/data';
+
 
 
 @Injectable({
@@ -38,7 +40,7 @@ export class FirebaseService {
     });
   }
 
-  async getProductData(){
+  async getProductData() {
     return onSnapshot(this.getUsersRef(), (currentUserProducts) => {
       this.dashboardData = [];
       currentUserProducts.forEach(async (product) => {
@@ -46,8 +48,10 @@ export class FirebaseService {
         querySnapshot.forEach((doc) => {
           console.log(doc.id, " => ", doc.data());
           this.dashboardData.push(this.setProductObject(doc.data(), doc.id));
-          console.log(this.dashboardData);
-          
+          const test: string = doc.data()['price'] + '';
+          const test2 = Number(test.split('.').join('').slice(0, -2).replace(',', '.'));
+          console.log(doc.data()['dateOfPurchase']);
+          series.monthDataSeries1.prices.push([doc.data()['dateOfPurchase'], test2]);
         });
       });
     });
@@ -84,7 +88,7 @@ export class FirebaseService {
   }
 
 
-  async addProduct(id:any, content:any){
+  async addProduct(id: any, content: any) {
     const docRef = await addDoc(this.getUserSalesRef(id), content)
       .catch(err => console.error(err))
       .then(() => {
@@ -101,7 +105,18 @@ export class FirebaseService {
       );
   }
 
-
+  sortData(a: any, b: any) {
+    if (a[0] === b[0]) {
+      let indexA =series.monthDataSeries1.prices.indexOf(a)
+      let indexB =series.monthDataSeries1.prices.indexOf(b)
+      series.monthDataSeries1.prices[indexB][1] += a[1];    
+      series.monthDataSeries1.prices[indexA].splice(0,2);
+      return 0
+    }
+    else {
+      return (a[0] < b[0]) ? -1 : 1;
+    }
+  }
 
   getUsersRef() {
     return collection(this.firestore, 'users')

@@ -40,11 +40,14 @@ export class DashboardComponent {
   public chartOptions: Partial<ChartOptions>;
 
 
-  constructor(private firebase: FirebaseService){
+  constructor(private firebase: FirebaseService) {
     setTimeout(() => {
-      console.log(firebase.dashboardData);
-    }, 100);
-    
+      series.monthDataSeries1.prices.sort(this.firebase.sortData);
+      this.chartOptions.series = ([{ name: "STOCK ABC", data: series.monthDataSeries1.prices }]);
+      console.log(series.monthDataSeries1.prices
+      );
+    }, 500);
+
 
     this.chartOptions = {
       series: [
@@ -64,9 +67,8 @@ export class DashboardComponent {
         enabled: false
       },
       stroke: {
-        curve: "straight"
+        curve: "smooth"
       },
-
       title: {
         text: "Fundamental Analysis of Stocks",
         align: "left"
@@ -75,7 +77,6 @@ export class DashboardComponent {
         text: "Price Movements",
         align: "left"
       },
-      labels: series.monthDataSeries1.dates,
       xaxis: {
         type: "datetime",
       },
@@ -87,4 +88,5 @@ export class DashboardComponent {
       }
     };
   }
+
 }

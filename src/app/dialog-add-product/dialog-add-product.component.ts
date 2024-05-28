@@ -51,6 +51,7 @@ export class DialogAddProductComponent {
   saveUserProduct() {
     this.loading = true;
     this.dateOfPurchase == undefined ? '' : this.product.dateOfPurchase = this.dateOfPurchase.getTime();
+    
     this.firebaseService.addProduct(this.userId, this.product.toJson());
     this.loading = false;
   }
