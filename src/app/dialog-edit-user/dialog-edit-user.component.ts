@@ -16,9 +16,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { FirebaseService } from '../shared/services/firebase.service';
-import { timestamp } from 'rxjs';
 import { UserDetailComponent } from '../user-detail/user-detail.component';
-import { Router } from '@angular/router';
 import { Storage, ref, uploadBytesResumable, getDownloadURL } from '@angular/fire/storage';
 
 @Component({

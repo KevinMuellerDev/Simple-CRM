@@ -60,7 +60,7 @@ export class UserDetailComponent {
   }
 
   async liveProductData() {
-    await this.firebase.getProductData(this.userId)
+    await this.firebase.getUserProductData(this.userId)
     this.products = this.firebase.products;
     console.log(this.products)
     this.products.length != 0 ? this.getPurchaseDate() : '';

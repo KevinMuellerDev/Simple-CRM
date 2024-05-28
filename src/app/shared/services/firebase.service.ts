@@ -13,15 +13,18 @@ export class FirebaseService {
   firestore: Firestore = inject(Firestore);
 
   unsubGuests;
+  unsubProducts;
 
   users: any[] = [];
   profileData: any[] = [];
   products: any[] = [];
+  dashboardData: any[] = [];
   id: any;
 
 
   constructor() {
     this.unsubGuests = this.getUserData();
+    this.unsubProducts = this.getProductData();
   }
 
 
@@ -35,8 +38,22 @@ export class FirebaseService {
     });
   }
 
+  async getProductData(){
+    return onSnapshot(this.getUsersRef(), (currentUserProducts) => {
+      this.dashboardData = [];
+      currentUserProducts.forEach(async (product) => {
+        const querySnapshot = await getDocs(collection(this.firestore, 'users', product.id, 'sales'));
+        querySnapshot.forEach((doc) => {
+          console.log(doc.id, " => ", doc.data());
+          this.dashboardData.push(this.setProductObject(doc.data(), doc.id));
+          console.log(this.dashboardData);
+          
+        });
+      });
+    });
+  }
 
-  async getProductData(id?: any) {
+  async getUserProductData(id?: any) {
     const querySnapshot = await getDocs(collection(this.firestore, 'users', id, 'sales'));
     this.products = [];
     querySnapshot.forEach((doc) => {

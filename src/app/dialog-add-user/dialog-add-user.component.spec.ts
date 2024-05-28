@@ -13,6 +13,9 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatButtonModule} from '@angular/material/button';
 import {FormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
+import { FirebaseService } from '../shared/services/firebase.service';
+import { Firestore, FirestoreModule, provideFirestore } from '@angular/fire/firestore';
+import { FirebaseAppModule } from '@angular/fire/app';
 
 describe('DialogAddUserComponent', () => {
   let component: DialogAddUserComponent;
@@ -20,7 +23,11 @@ describe('DialogAddUserComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DialogAddUserComponent, MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule]
+      imports: [DialogAddUserComponent, MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule, FirestoreModule,],
+      providers:[
+        FirebaseService,
+        {provide: Firestore, useValue: {}}
+      ]
     })
     .compileComponents();
     

@@ -41,6 +41,10 @@ export class DashboardComponent {
 
 
   constructor(private firebase: FirebaseService){
+    setTimeout(() => {
+      console.log(firebase.dashboardData);
+    }, 100);
+    
 
     this.chartOptions = {
       series: [
@@ -82,6 +86,5 @@ export class DashboardComponent {
         horizontalAlign: "left"
       }
     };
-
   }
 }
