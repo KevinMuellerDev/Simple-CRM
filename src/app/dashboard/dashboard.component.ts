@@ -41,13 +41,6 @@ export class DashboardComponent {
 
 
   constructor(private firebase: FirebaseService) {
-    setTimeout(() => {
-      series.monthDataSeries1.prices.sort(this.firebase.sortData);
-      this.chartOptions.series = ([{ name: "STOCK ABC", data: series.monthDataSeries1.prices }]);
-      console.log(series.monthDataSeries1.prices
-      );
-    }, 500);
-
 
     this.chartOptions = {
       series: [
@@ -88,5 +81,14 @@ export class DashboardComponent {
       }
     };
   }
-
+    ngOnInit(): void {
+      //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+      //Add 'implements OnInit' to the class.
+      setTimeout(async () => {
+        await series.monthDataSeries1.prices.sort(this.firebase.sortData);
+        this.chartOptions.series = ([{ name: "STOCK ABC", data: series.monthDataSeries1.prices }]);
+        console.log(series.monthDataSeries1.prices
+        );
+      }, 1000);
+    }
 }

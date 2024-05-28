@@ -110,7 +110,7 @@ export class FirebaseService {
       let indexA =series.monthDataSeries1.prices.indexOf(a)
       let indexB =series.monthDataSeries1.prices.indexOf(b)
       series.monthDataSeries1.prices[indexB][1] += a[1];    
-      series.monthDataSeries1.prices[indexA].splice(0,2);
+      
       return 0
     }
     else {
